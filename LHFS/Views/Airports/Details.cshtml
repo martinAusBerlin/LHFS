@@ -1,0 +1,231 @@
+﻿@using System.Threading
+@using CodeKicker.BBCode
+@using LHFS.Helpers
+@{
+    ViewBag.Title = @Airports.Title;
+}
+
+@model LHFS.Models.AirportVersion
+
+@section HeaderContent { 
+	<link href="@Url.Content("~/Content/AirportDetails.css")" rel="stylesheet" type="text/css"/>
+	<link href="@Url.Content("~/Content/ConnectionTable.css")" rel="stylesheet" type="text/css"/>
+	<link href="@Url.Content("~/Content/ChartTable.css")" rel="stylesheet" type="text/css"/>
+	<link href="@Url.Content("~/Content/AlternateTable.css")" rel="stylesheet" type="text/css"/>
+	<script type="text/javascript">
+		$(function () {
+			$(".modal").dialog({
+				modal: true,
+				buttons: {
+					Ok: function () {
+						$(this).dialog("close");
+					}
+				}
+			});
+
+			LoadCharts();
+			LoadAlternates();
+	
+		});
+
+		var dialog;
+
+		function OnChartSaved() {
+
+			if ($('#dialog-modal input[name="IsSaved"]').length) {
+				$(dialog).dialog("destroy");
+			}
+			LoadCharts();
+		}
+
+		function OnAlternateSaved() {
+
+			if ($('#dialog-modal input[name="IsSaved"]').length) {
+				$(dialog).dialog("destroy");
+			}
+			LoadAlternates();
+		}
+
+		function LoadCharts() {
+
+			$.ajax({
+				url: '@Url.Action("GetCharts", "Airports")',
+				data: { icao: "@Model.AirportICAO" }
+			}).success(function (data) {
+				$('#chartlist').html(data);
+			});
+
+			
+		}
+
+		function LoadAlternates() {
+
+			$.ajax({
+				url: '@Url.Action("GetAlternates", "Airports")',
+				data: { icao: "@Model.AirportICAO" }
+			}).success(function (data) {
+				$('#alternatelist').html(data);
+			});
+		}
+
+		function OnSuccess() {
+			dialog = $("#dialog-modal").dialog({
+				modal: true,
+				resizable: false,
+				minWidth: 520,
+				close: function( event, ui ) { dialog.dialog('destroy'); }
+			}).dialog('open');
+		}
+	</script>
+}
+
+<h1>@Airports.Title</h1>
+
+@if (ViewBag.IsPreview) {
+<div class="modal" title="@Airports.IsPreviewTitle">
+<p>
+    <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 50px 0;"></span>
+    @Airports.IsPreview
+</p>
+</div>
+}
+
+@if (ViewBag.ShowNoChangesMessage) {
+<div class="modal" title="@Airports.NoChangesFoundTitle">
+<p>
+    <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 50px 0;"></span>
+	@Airports.NoChangesFound
+</p>
+</div>
+}
+
+@if (ViewBag.ShowChangesSaved) {
+<div class="modal" title="@Airports.ChangesSavedTitle">
+<p>
+	<span class="ui-icon ui-icon-check" style="float: left; margin: 0 7px 50px 0;"></span>
+	@Airports.ChangesSaved
+</p>
+</div>
+}
+
+@if (Thread.CurrentThread.CurrentUICulture.Name == "de-DE") {
+<h2 class="left">@Html.DisplayFor(model => model.Airport.ICAO)/@Html.DisplayFor(model => model.Airport.IATA) &middot; @Html.DisplayFor(model => model.Airport.Name) &middot; @Html.DisplayFor(model => model.Airport.IcaoCountryCode.Country.German)</h2>
+} else {
+<h2 class="left">@Html.DisplayFor(model => model.Airport.ICAO)/@Html.DisplayFor(model => model.Airport.IATA) &middot; @Html.DisplayFor(model => model.Airport.Name) &middot; @Html.DisplayFor(model => model.Airport.IcaoCountryCode.Country.English)</h2>
+}
+
+<div class="clearfix"></div>
+
+
+
+
+<ul class="menu">
+<li><a href="#Charts">@Airports.Charts</a></li>
+<li><a href="#Departures">@Airports.DeparturesTitle</a></li>
+<li><a href="#Arrivals">@Airports.ArrivalsTitle</a></li>
+<li><a href="#Terrain">@Airports.TerrainTitle</a></li>
+<li><a href="#Groundops">@Airports.GroundopsTitle</a></li>
+<li><a href="#Hazards">@Airports.HazardsTitle</a></li>
+<li><a href="#Departing">@Airports.DepartingFlights</a></li>
+<li><a href="#Arriving">@Airports.ArrivingFlights</a></li>
+</ul>
+
+<div class="sidebar left">
+
+<div class="box basics">
+<div class="title"><a name="Basics">@Airports.Basics</a> @if (!ViewBag.IsPreview) { @Html.ActionLink(@Airports.Edit, "Edit", new { id = Model.ID }) }</div>
+<table class="basics-table">
+<tr><th>@Airports.Category</th><td>@Html.DisplayFor(model => model.Detail.Category)</td></tr>
+<tr><th>@Airports.Position</th><td>@Html.DisplayFor(t => t.Detail.Lat, "Latitude")<br/>@Html.DisplayFor(t => t.Detail.Lon, "Longitude")</td></tr>
+<!--<tr><th>@Airports.MagneticVar</th><td>@(Model.Detail.MagVar < 0 ? "E" : "W") @Math.Abs(Model.Detail.MagVar)° </td></tr>-->
+<tr><th>@Airports.Elevation</th><td>@Html.DisplayFor(model => model.Detail.Elevation) ft</td></tr>
+<tr><th>@Airports.LongestRunway</th><td>@Math.Round(Model.Detail.LongestRunway*0.3048, 0) m<br />@Model.Detail.LongestRunway ft</td></tr>
+</table>
+<small>@Html.DisplayFor(model => model.Departure.CreatedByUser.FullnameAndID) @Html.DisplayFor(model => model.Departure.CreatedOn)</small>
+</div>
+
+<div class="box arrivals">
+<div class="title"><a name="Alternates">@Airports.Alternates</a>  @if (!ViewBag.IsPreview) { @Ajax.ActionLink(@Airports.Add, "AddAlternate", "Airports", new { icao = Model.AirportICAO }, new AjaxOptions() { UpdateTargetId = "dialog-modal", OnSuccess = "OnSuccess" }) }</div>
+<div id="alternatelist">
+
+</div>
+
+</div>
+	
+</div>
+
+<div class="maincontent">
+
+<div class="box charts">
+<div class="title"><a name="Charts">@Airports.Charts</a> @if (!ViewBag.IsPreview) { @Ajax.ActionLink(@Airports.Add, "AddChart", "Airports", new { icao = Model.AirportICAO }, new AjaxOptions() { UpdateTargetId = "dialog-modal", OnSuccess = "OnSuccess" }) }</div>
+<div id="chartlist">
+
+</div>
+</div>
+
+<div class="box departures">
+<div class="title"><a name="Departures">@Airports.DeparturesTitle</a>@if (!ViewBag.IsPreview) { @Html.ActionLink(@Airports.Edit, "Edit", new { id = Model.ID }) }</div>
+<div>
+@Html.Raw(BBCode.ToHtml(Model.Departure.Text))
+</div>
+<small>@Html.DisplayFor(model => model.Departure.CreatedByUser.FullnameAndID) @Html.DisplayFor(model => model.Departure.CreatedOn)</small>
+</div>
+
+
+<div class="box arrivals">
+<div class="title"><a name="Arrivals">@Airports.ArrivalsTitle</a>@if (!ViewBag.IsPreview) { @Html.ActionLink(@Airports.Edit, "Edit", new { id = Model.ID }) }</div>
+<div>
+@Html.Raw(BBCode.ToHtml(Model.Arrival.Text))
+</div>
+<small>@Html.DisplayFor(model => model.Arrival.CreatedByUser.FullnameAndID) @Html.DisplayFor(model => model.Arrival.CreatedOn)</small>
+</div>
+
+
+<div class="box terrain">
+<div class="title"><a name="Terrain">@Airports.TerrainTitle</a>@if (!ViewBag.IsPreview) { @Html.ActionLink(@Airports.Edit, "Edit", new { id = Model.ID }) }</div>
+<div>
+@Html.Raw(BBCode.ToHtml(Model.Terrain.Text))
+</div>
+<small>@Html.DisplayFor(model => model.Terrain.CreatedByUser.FullnameAndID) @Html.DisplayFor(model => model.Terrain.CreatedOn)</small>
+</div>
+
+<div class="box groundops">
+<div class="title"><a name="Groundops">@Airports.GroundopsTitle</a>@if (!ViewBag.IsPreview) { @Html.ActionLink(@Airports.Edit, "Edit", new { id = Model.ID }) }</div>
+<div>
+@Html.Raw(BBCode.ToHtml(Model.GroundOp.Text))
+</div>
+<small>@Html.DisplayFor(model => model.GroundOp.CreatedByUser.FullnameAndID) @Html.DisplayFor(model => model.GroundOp.CreatedOn)</small>
+</div>
+
+<div class="box hazards">
+<div class="title"><a name="Hazards">@Airports.HazardsTitle</a>@if (!ViewBag.IsPreview) { @Html.ActionLink(@Airports.Edit, "Edit", new { id = Model.ID }) }</div>
+<div>
+@Html.Raw(BBCode.ToHtml(Model.Hazard.Text))
+</div>
+<small>@Html.DisplayFor(model => model.Hazard.CreatedByUser.FullnameAndID) @Html.DisplayFor(model => model.Hazard.CreatedOn)</small>
+</div>
+
+</div>
+
+
+<div class="clearfix"></div>
+
+<div class="connections">
+
+<div class="box departures">
+<div class="title"><a name="Departing">@Airports.DepartingFlights</a></div>
+
+@{ Html.RenderAction("ConnectionsDepartingFrom", "Connections", new { icao = Model.AirportICAO }); }
+
+</div>
+
+<div class="box arrivals">
+<div class="title"><a name="Arriving">@Airports.ArrivingFlights</a></div>
+
+@{ Html.RenderAction("ConnectionsArrivingAt", "Connections", new { icao = Model.AirportICAO }); }
+
+</div>
+
+<p class="version-hint">VersionID @Html.DisplayFor(model => model.ID), @Airports.RetrievedAt @DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm") UTC</p>
+
+</div>

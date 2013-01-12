@@ -1,0 +1,44 @@
+﻿@model string
+
+<script type="text/javascript">
+
+	$(function () {
+
+		$("#@(ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldId(Model))SelectBox").keydown(function (event) {
+			if (event.keyCode == 8 || event.keyCode == 46) {
+				$("#@(ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldId(Model))SelectBox").val('');
+				$("#@(ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldId(Model))").val('');
+			}
+		});
+
+		var cache = {}, lastXhr;
+
+		$("#@(ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldId(Model))SelectBox").autocomplete({
+			minLength: 2,
+
+			source: function (request, response) {
+				var term = request.term;
+				if (term in cache) {
+					response(cache[term]);
+					return;
+				}
+
+				lastXhr = $.getJSON('@Url.Action("GetAirport", "Airports")', request, function (data, status, xhr) {
+					cache[term] = data;
+					if (xhr === lastXhr) {
+						response(data);
+					}
+				});
+			},
+			select: function (event, ui) {
+				event.preventDefault();
+				$("#@(ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldId(Model))").val(ui.item.value);
+				$("#@(ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldId(Model))SelectBox").val(ui.item.label);
+
+			}
+		});
+	});
+</script>
+<input class="textbox" id="@(ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldId(Model))SelectBox" name="@(ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(Model))SelectBox" type="text">
+@Html.ValidationMessageFor(model => model)
+@Html.HiddenFor(model => model)

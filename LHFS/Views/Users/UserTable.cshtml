@@ -1,0 +1,101 @@
+﻿@using System.Threading
+@model IEnumerable<LHFS.Views.Users.ViewModel.UserTableModel>
+
+<table class="user-table">
+    <tr>
+	    <th>
+            @Roster.ID
+        </th>
+		<th>
+			@Roster.Name
+		</th>
+		<th>
+			@Roster.Country
+		</th>
+        <th>
+            @Roster.Rank
+        </th>
+        <th>
+            @Roster.Vatsim
+        </th>
+        <th>
+			@Roster.Ivao
+        </th>
+        <th>
+			@Roster.Homebase
+		</th>
+		<th>
+			@Roster.Typeratings
+        </th>
+		<th>
+			@Roster.Flights
+        </th>
+		<th>
+            @Roster.Hours
+        </th>
+		<th>
+			@Roster.Points
+        </th>
+       	<th>
+            @Roster.LastFlight
+        </th>
+		<th>
+			@Roster.MemberSince
+		</th>
+		<th>
+			@Roster.Status
+		</th>
+    </tr>
+@foreach (var item in Model) {
+    <tr style='background-color: #@item.Color; color: #@item.TextColor'>
+		<td>
+			@item.ID
+        </td>
+        <td>
+            @Html.ActionLink(item.Fullname, "Details", new { item.ID })
+        </td>
+        <td>
+			@if (Thread.CurrentThread.CurrentUICulture.Name == "de-DE") {
+				<img src="/Images/Flags/24/@(item.Country == null ? Roster.None : item.CountryISO).png" title="@(item.Country == null ? Roster.None : item.Country.German)"/>
+			} else {
+				<img src="/Images/Flags/24/@(item.Country == null ? Roster.None : item.CountryISO).png" title="@(item.Country == null ? Roster.None : item.Country.English)"/>
+			}
+        </td>
+        <td>
+			<img src="@item.Rank.SmallRankIconPath" title="@(item.Rank == null ? Roster.None : item.Rank.Title)"/>
+        </td>
+        <td>
+			@item.VatsimID
+        </td>
+        <td>
+			@item.IvaoID
+        </td>
+		<td title="@(item.HomeBase == null ? Roster.None : item.HomeBase.Name)">
+			@(item.HomeBase == null ? Roster.None : item.HomeBase.ICAO)
+		</td>
+        <td>
+			@foreach (var typeRating in item.UserTypeRatings.Where(t => t.ValidTo == null)) {
+				@typeRating.TypeRating.Title<br />
+   }
+        </td>
+        <td>
+			@item.NumberOfFlights
+        </td>
+		<td>
+			@item.FlightTime
+		</td>
+		<td>
+			@item.NumberOfContributions
+		</td>
+        <td>
+			@string.Format("{0:yyyy-MM-dd}", item.LastFlightOn)
+        </td>
+        <td>
+			@string.Format("{0:yyyy-MM-dd}", item.MemberSince)
+        </td>
+		<td class="@item.Status">
+			@item.Status
+		</td>
+    </tr>  
+}
+</table>

@@ -1,0 +1,15 @@
+﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<System.DateTime?>" %>
+<script type="text/javascript">
+	$(function () {
+		$.datepicker.setDefaults($.datepicker.regional['@Thread.CurrentThread.CurrentUICulture.Name']);
+		
+		$(".date-with-picker").datepicker(
+			{
+				dateFormat: 'yy-mm-dd',
+			}
+		);
+	});
+</script>
+<%: Html.TextBox(String.Empty, Model.HasValue ? String.Format("{0:yyyy-MM-dd}", Model) : String.Empty, new { @class = "date-with-picker" })%>  
+
+

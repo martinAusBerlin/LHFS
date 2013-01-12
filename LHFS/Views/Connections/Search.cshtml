@@ -1,0 +1,136 @@
+﻿@using LHFS.Resources
+@using LHFS.Helpers
+
+@{
+    ViewBag.Title = @Schedule.Title;
+}
+
+@section HeaderContent { 
+	<link href="@Url.Content("~/Content/Schedule.css")" rel="stylesheet" type="text/css"/>
+	<link href="@Url.Content("~/Content/ConnectionTable.css")" rel="stylesheet" type="text/css"/>
+}
+	
+
+@model LHFS.Views.Connections.ViewModel.SearchModel
+
+<script type="text/javascript">
+
+	function OnBegin() {
+		if ($('#form0').valid()) {
+			$('#connection-table').toggle(false);
+		}
+	}
+
+	function OnSuccess() {
+
+		$('#connection-table').toggle(true);
+	}
+
+	$(function () {
+
+		$("#slider-range").slider({
+			range: true,
+			min: 0,
+			max: 24,
+			values: [17, 20],
+			slide: function (event, ui) {
+				$("#startTime").val(
+					ui.values[0] + ":00" + " @Schedule.Until "
+					+ ui.values[1] + ":00" + " UTC");
+			}
+		});
+
+		$("#startTime").val(
+					$("#slider-range").slider("values", 0) + ":00" + " @Schedule.Until "
+					+ $("#slider-range").slider("values", 1) + ":00" + " UTC"
+		);
+
+		$("#slider-range2").slider({
+			range: true,
+			min: 0,
+			max: 24,
+			values: [0, 12],
+			slide: function (event, ui) {
+				$("#duration").val(
+					ui.values[0] + ":00" + " @Schedule.Until "
+					+ ui.values[1] + ":00" + " h");
+			}
+		});
+
+		$("#duration").val(
+			$("#slider-range2").slider("values", 0) + ":00" + " @Schedule.Until "
+			+ $("#slider-range2").slider("values", 1) + ":00 h"
+		);
+
+	});
+</script>
+
+
+<h1>@Schedule.Title</h1>
+
+@using (Ajax.BeginForm("GetConnections", "Connections", new AjaxOptions { UpdateTargetId = "connection-table", LoadingElementId = "ajax-loader", InsertionMode = InsertionMode.Replace, OnBegin = "OnBegin", OnSuccess = "OnSuccess" })) {
+<div class="filter">
+
+<div class="filter-box large">
+<div class="title">@Html.LabelFor(model => model.AircraftTypeIDs)</div>
+<div class="scrollable">
+@Html.CheckBoxListFor(t => t.AircraftTypeIDs, Model.PossibleAircraftTypes, new { @class = "checkbox-list" })
+</div>
+</div>
+
+<div class="filter-box left">
+<div class="title">@Html.LabelFor(model => model.DepartureAirport)</div>
+@Html.EditorFor(model => model.DepartureAirport, "AirportSelectBox")
+</div>
+
+<div class="filter-box right">
+<div class="title">@Html.LabelFor(model => model.DestinationAirport)</div>
+@Html.EditorFor(model => model.DestinationAirport, "AirportSelectBox")
+</div>
+
+<div class="filter-box left">
+<div class="title">@Schedule.DepartureTime @Html.CheckBoxFor(t => t.WithDepTime, new { @class = "right"})</div>
+<input type="text" name="startTime" id="startTime" class="sliderText"/><div id="slider-range"></div>
+</div>
+
+<div class="filter-box right">
+<div class="title">@Html.LabelFor(model => model.FlightNumber)</div>
+@Html.TextBoxFor(model => model.FlightNumber, new { @class = "textbox" })
+@Html.ValidationMessageFor(model => model.FlightNumber)
+</div>
+
+<div class="filter-box right">
+<div class="title">@Html.LabelFor(model => model.Date)</div>
+@Html.EditorFor(model => model.Date, "DateOnly")
+@Html.ValidationMessageFor(model => model.Date)
+</div>
+
+<div class="filter-box left">
+<div class="title">@Schedule.Duration @Html.CheckBoxFor(t => t.WithMaxDuration, new { @class = "right" })</div>
+<input type="text" name="duration" id="duration" class="sliderText"/><div id="slider-range2"></div>
+</div>
+
+<div class="filter-box left">
+<div class="title">@Html.LabelFor(model => model.AirlineIDs)</div>
+@Html.DropDownListFor(t => t.AirlineIDs, Model.PossibleAirlines, new { @class = "dropdown" })
+</div>
+
+<div class="button-container">
+<input type="image" value="save" src="/ButtonImageHandler.ashx?text=@Schedule.ButtonText" />
+</div>
+
+
+<div class="clearfix"></div>
+
+</div>
+
+}
+
+
+<div id="ajax-loader" style="display: none; margin-left: auto; margin-right: auto; width: 66px">
+	<img src="/Images/Icons/ajax-loader.gif" alt="Loading ..."/>
+</div>
+
+<div id="connection-table">
+
+</div>

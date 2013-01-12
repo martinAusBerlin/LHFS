@@ -1,0 +1,116 @@
+﻿@{
+    ViewBag.Title = @UserEdit.Title;
+}
+
+@section HeaderContent { 
+	<link href="@Url.Content("~/Content/UserEdit.css")" rel="stylesheet" type="text/css"/>
+	<link href="@Url.Content("~/Uploadify/uploadify.css")" rel="stylesheet" type="text/css"/>
+	<script src="@Url.Content("~/Uploadify/jquery.uploadify.min.js")" type="text/javascript"></script>
+	<script type="text/javascript">
+		$(function () {
+			$("#tabs").tabs();
+
+			$('#takeVacation').click(function () {
+				$("#tabs-3").load('@Url.Action("StartVacation", "Users")');
+			});
+
+			$('#file_upload').uploadify({
+				'swf': '/Uploadify/uploadify.swf',
+				'uploader': '@Url.Action("UploadPhoto", "Users")',
+				'buttonImage': '/ButtonImageHandler.ashx?text=@UserEdit.ChooseImage&w=180',
+				'width': '208',
+				'height': '23',
+				'onUploadSuccess': function (file, data, response) {
+					$("#member-photo").attr("src", "@Html.Raw(ViewBag.PhotoLink)");
+				}
+			});
+		});
+	</script>
+}
+
+
+@model LHFS.Views.Users.ViewModel.UserEditModel
+@using LHFS.Helpers
+
+<h1>@UserEdit.Title</h1>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary()
+
+	<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">@UserEdit.Profile</a></li>
+		<li><a href="#tabs-2">@UserEdit.Settings</a></li>
+		<li><a href="#tabs-3">@UserEdit.Vacation</a></li>
+		<li><a href="#tabs-4">@UserEdit.PhotoUpload</a></li>
+	</ul>
+	<div id="tabs-1">
+		
+		<table class="form">
+		<tr><th>@Html.LabelFor(model => model.Birthday)</th><td>@Html.EditorFor(model => model.Birthday, "DateOnly") @Html.ValidationMessageFor(model => model.Birthday)</td></tr>
+		<tr><th>@Html.LabelFor(model => model.City)</th><td>@Html.EditorFor(model => model.City) @Html.ValidationMessageFor(model => model.City)</td></tr>
+		<tr><th>@Html.LabelFor(model => model.CountryISO)</th><td>@Html.DropDownListFor(t => t.CountryISO, Model.PossibleCountries) @Html.ValidationMessageFor(model => model.CountryISO)</td></tr>
+		<tr><th>@Html.LabelFor(model => model.Mail)</th><td>@Html.EditorFor(model => model.Mail) @Html.ValidationMessageFor(model => model.Mail)</td></tr>
+
+		<tr><th>@Html.LabelFor(model => model.VatsimID)</th><td>@Html.EditorFor(model => model.VatsimID) @Html.ValidationMessageFor(model => model.VatsimID)</td></tr>
+		<tr><th>@Html.LabelFor(model => model.IvaoID)</th><td>@Html.EditorFor(model => model.IvaoID) @Html.ValidationMessageFor(model => model.IvaoID)</td></tr>
+		<tr><th>@Html.LabelFor(model => model.RealPilotLicense)</th><td>@Html.TextAreaFor(model => model.RealPilotLicense) @Html.ValidationMessageFor(model => model.RealPilotLicense)</td></tr>
+		<tr><th>@Html.LabelFor(model => model.Comments)</th><td>@Html.TextAreaFor(model => model.Comments) @Html.ValidationMessageFor(model => model.Comments)</td></tr>
+		
+		<tr><th>@Html.LabelFor(model => model.ConfirmPassword)</th><td>@Html.PasswordFor(model => model.ConfirmPassword) @Html.ValidationMessageFor(model => model.ConfirmPassword)</td></tr>
+		<tr><th>@Html.LabelFor(model => model.Password)</th><td>@Html.PasswordFor(model => model.Password) @Html.ValidationMessageFor(model => model.Password)</td></tr>
+		</table>
+		
+	</div>
+	<div id="tabs-2">
+	
+		<div class="info-box" style="float: right; width: 40%">
+		<p class="title">@UserEdit.TypeRatingInfoTitle</p>
+		
+		<p>@string.Format(UserEdit.TypeRatingInfo, Html.DisplayFor(model => model.Rank.Title), Html.DisplayFor(model => model.Rank.NumberOfTyperatings))</p>
+		<p>@UserEdit.TypeRatingInfoEnding</p>
+
+		</div>
+
+		<table class="form">
+			
+		<tr><th>@Html.LabelFor(model => model.ReceiveNewsletter)</th><td>@Html.CheckBoxFor(model => model.ReceiveNewsletter) @Html.ValidationMessageFor(model => model.ReceiveNewsletter)</td></tr>
+
+		<tr><th>@Html.LabelFor(model => model.HideEmail)</th><td>@Html.CheckBoxFor(model => model.HideEmail) @Html.ValidationMessageFor(model => model.HideEmail)</td></tr>
+		<tr><th>@Html.LabelFor(model => model.ShowGallery)</th><td>@Html.CheckBoxFor(model => model.ShowGallery) @Html.ValidationMessageFor(model => model.ShowGallery)</td></tr>
+		<tr><th>@Html.LabelFor(model => model.HideProfile)</th><td>@Html.CheckBoxFor(model => model.HideProfile) @Html.ValidationMessageFor(model => model.HideProfile)</td></tr>
+		
+		<tr><th>@Html.LabelFor(model => model.CareerPathOption)</th><td>@Html.CheckBoxFor(model => model.CareerPathOption) @Html.ValidationMessageFor(model => model.CareerPathOption)</td></tr>
+		
+		<tr><th>Type ratings</th><td>@Html.TypeRatingCheckBoxListFor(model => model.TypeRatingIDs, Model.PossibleTypeRatings, UserEdit.ActiveForDays) @Html.ValidationMessageFor(model => model.TypeRatingIDs)</td></tr>
+
+		<tr><th>@Html.LabelFor(model => model.AirportICAO)</th><td>@Html.DropDownListFor(t => t.AirportICAO, Model.PossibleHomeBases) @Html.ValidationMessageFor(model => model.AirportICAO)</td></tr>
+
+		</table>
+	</div>
+	<div id="tabs-3">
+	
+		@{ Html.RenderAction("Vacation"); }
+
+	</div>
+	<div id="tabs-4">
+
+		<p>@UserEdit.PhotoUploadIntro</p>
+
+		<div>
+		<input type="file" name="file_upload" id="file_upload" />
+		</div>
+		
+		<img id="member-photo" @if (ViewBag.HasPhoto) { <text>src="</text>@Html.Raw(ViewBag.PhotoLink)<text>"</text> } alt="Photo of me"/>
+
+	</div>
+</div>
+
+<div class="button-container">
+<input type="image" value="save" src="/ButtonImageHandler.ashx?text=@UserEdit.ButtonText" />
+</div>
+
+<div class="clearfix"></div>	
+	
+}
+

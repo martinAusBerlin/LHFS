@@ -1,0 +1,35 @@
+﻿@model LHFS.Views.Airports.ViewModel.AddChartModel
+
+@using (Ajax.BeginForm("AddChart", "Airports", new AjaxOptions { OnSuccess = "OnChartSaved", InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-modal", HttpMethod = "POST" })) {
+	
+<fieldset>
+<legend>@Airports.AddChart</legend>
+
+@if(ViewBag.IsSaved != null && ViewBag.IsSaved) {
+@Html.Hidden("IsSaved", "true")
+}
+
+
+@Html.ValidationSummary(false)
+		
+@Html.HiddenFor(model => model.AirportChart.AirportICAO)
+
+<table>
+<tr>
+<th>@Html.LabelFor(model => model.AirportChart.Title)</th><td>@Html.TextBoxFor(model => model.AirportChart.Title) @Html.ValidationMessageFor(model => model.AirportChart.Title)</td>
+</tr>
+<tr>
+<th>@Html.LabelFor(model => model.AirportChart.Link)</th><td>@Html.TextBoxFor(model => model.AirportChart.Link) @Html.ValidationMessageFor(model => model.AirportChart.Link)</td>
+</tr>
+<tr>
+<th>@Html.LabelFor(model => model.AirportChart.ChartType)</th><td>@Html.DropDownListFor(model => model.AirportChart.ChartTypeKey, Model.PossibleChartTypes.Select(t => new SelectListItem() { Text = t.Name, Value = t.Key }))</td>
+</tr>
+</table>
+
+<div class="button-container right" style="margin-top: 10px; margin-bottom: 10px">
+<input type="image" value="save" src="/ButtonImageHandler.ashx?text=@AirportChartResource.ButtonText" />
+</div>
+	
+</fieldset>
+
+}

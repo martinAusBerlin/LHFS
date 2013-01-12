@@ -1,0 +1,76 @@
+﻿.content 
+{
+	padding-left: 10px;
+	padding-right: 10px;
+	background: #fff;
+}
+
+.header-image 
+{
+	background: url('/Images/Banner/fleet.png') no-repeat;
+	height: 120px;
+}
+
+
+.aircraft-type-gallery * div
+{
+	float: left;
+	padding: 10px;
+	margin: 0 5px 5px 0;
+	height: 66px;
+	background-position: center 70%;
+	background-repeat:no-repeat;
+	width: 178px;
+	border-spacing: 10px;
+	border-bottom: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+}
+
+
+
+.aircraft-type-box 
+{
+	margin-top: 50px;
+}
+
+.aircraft-type-box .description > table
+{
+	text-align: right;
+	border: 1px solid #ddd;
+}
+
+.aircraft-type-box .description > table th, .aircraft-type-box .description > table td
+{
+	background-color: #fff;
+	border: 0;
+	padding: 3px;
+}
+
+.description > table th
+{
+	text-align: right;
+}
+
+.description table th.divisor 
+{
+	text-align: left;
+	background-color: #e6e6e6;
+	padding: 4px;
+}
+
+.description 
+{
+	float: right;
+	margin-left: 50px;
+}
+
+.image-box 
+{
+	padding: 0px 10px 50px 10px;
+	float: left;
+}
+
+.image-box img 
+{
+   -webkit-box-reflect: below 1px -webkit-linear-gradient(top, rgba(0,0,0,0) 25%,rgba(255,255,255,1) 100%);
+}

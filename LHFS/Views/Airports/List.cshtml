@@ -1,0 +1,25 @@
+﻿@model IEnumerable<LHFS.Models.Airport>
+@using System.Threading
+
+<table class="airport-table">
+<tr><th>@Airports.ICAO</th><th>@Airports.IATA</th><th>@Airports.Name</th><th>@Airports.Country</th><th>@Airports.Offset</th></tr>
+@foreach (var item in Model) {
+<tr>
+	@if (item.ICAO != null) { 
+		<td>@Html.ActionLink(item.ICAO, "Details", new { id = item.ICAO })</td>
+		<td>@(item.IATA != null ? @Html.ActionLink(item.IATA, "Details", new { id = item.ICAO }) : MvcHtmlString.Create(String.Empty))</td>
+		<td>@Html.ActionLink(item.Name, "Details", new { id = item.ICAO })</td>
+	 if (Thread.CurrentThread.CurrentUICulture.Name == "de-DE" && !String.IsNullOrEmpty(item.IcaoCountryCode.Country.German)) {	
+			<td>@Html.ActionLink(item.IcaoCountryCode.Country.German, "Details", new { id = item.ICAO })</td>
+		} else {
+			<td>@Html.ActionLink(item.IcaoCountryCode.Country.English, "Details", new { id = item.ICAO })</td>
+		}
+		<td>@(item.TimeZoneName != null ? Html.ActionLink(TimeZoneInfo.FindSystemTimeZoneById(item.TimeZoneName).BaseUtcOffset.TotalHours.ToString("+##.#;-##.#"), "Details", new { id = item.ICAO }) : MvcHtmlString.Create(String.Empty))</td>
+	} else {
+		<td></td>
+		<td>@Html.ActionLink(item.ICAO, "Details", new { id = item.ICAO })</td>
+		<td></td>
+	} 
+</tr>
+} 		
+</table>

@@ -1,0 +1,4 @@
+﻿@model System.DateTime?
+@using System.Threading
+
+@Html.TextBox(String.Empty, Model.HasValue ? String.Format("{0:yyyy-MM-dd}", Model) : String.Empty, new { @class = "date-with-picker" })

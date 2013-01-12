@@ -1,0 +1,45 @@
+﻿@using LHFS.Resources
+
+@section HeaderContent { 
+	<link href="@Url.Content("~/Content/Home.css")" rel="stylesheet" type="text/css"/>
+}
+
+@{
+	ViewBag.Title = @Home.Title;
+}
+
+<div class="welcome-box">
+</div>
+
+<div class="myflights-box">
+</div>
+
+<div class="section-box moveddown" id="schedule">
+<img src="/TextImageHandler.ashx?text=@Home.Schedule&c=666666&s=14&f=hll____-webfont.ttf" alt="@Home.Schedule"/>
+</div>
+
+<div class="section-box moveddown" id="fleet">
+<img src="/TextImageHandler.ashx?text=@Home.Fleet&c=666666&s=14&f=hll____-webfont.ttf" alt="@Home.Fleet"/>
+</div>
+
+<div class="section-box moveddown" id="routemanual">
+<img src="/TextImageHandler.ashx?text=@Home.RouteManual&c=666666&s=14&f=hll____-webfont.ttf" alt="@Home.RouteManual"/>
+</div>
+
+<div class="section-box" id="gallery">
+<img src="/TextImageHandler.ashx?text=@Home.Gallery&c=666666&s=14&f=hll____-webfont.ttf" alt="@Home.Gallery"/>
+</div>
+
+<div class="section-box" id="forums">
+<img src="/TextImageHandler.ashx?text=@Home.Forums&c=666666&s=14&f=hll____-webfont.ttf" alt="@Home.Forums"/>
+</div>
+
+<div class="section-box" id="roster">
+<img src="/TextImageHandler.ashx?text=@Home.Roster&c=666666&s=14&f=hll____-webfont.ttf" alt="@Home.Roster"/>
+</div>
+
+<div class="section-box" id="logbook">
+<img src="/TextImageHandler.ashx?text=@Home.Logbook&c=666666&s=14&f=hll____-webfont.ttf" alt="@Home.Logbook"/>
+</div>
+
+<div class="clearfix"></div>

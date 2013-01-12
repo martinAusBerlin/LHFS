@@ -1,0 +1,78 @@
+﻿@model LHFS.Views.AircraftTypes.ViewModel.OverviewModel
+
+@{
+    ViewBag.Title = @AircraftTypes.Title;
+}
+
+@section HeaderContent { 
+<link href="@Url.Content("~/Content/AircraftTypes.css")" rel="stylesheet" type="text/css"/>
+<link href="@Url.Content("~/Content/ConnectionTable.css")" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">
+
+	function setupGui() {
+		$("#accordion").accordion({
+			autoHeight: false,
+			navigation: true
+		});
+
+		$("#tabs").tabs();
+	}
+
+	$(function () {
+		setupGui();
+	});
+</script>
+}
+
+<h1>@AircraftTypes.Title</h1>
+
+<div id="accordion">
+	<h3><a href="#">@AircraftTypes.LongHaulTitle</a></h3>
+	<div class="aircraft-type-gallery">
+	@foreach (var item in Model.Long) {
+		<a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#aircraft-type-box" data-ajax-complete="setupGui()" href="Details/@item.ICAO">
+			<div style="background-image: url('@item.SmallTypeImageUrl')">
+			<p>@item.Longname</p>
+			</div>
+		</a>
+ }
+	</div>
+	<h3><a href="#">@AircraftTypes.MediumHaulTitle</a></h3>
+	<div class="aircraft-type-gallery">
+	@foreach (var item in Model.Medium) {
+		<a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#aircraft-type-box" data-ajax-complete="setupGui()" href="Details/@item.ICAO">
+			<div style="background-image: url('@item.SmallTypeImageUrl')">
+			<p>@item.Longname</p>
+			</div>
+		</a>
+ }
+	</div>
+	<h3><a href="#">@AircraftTypes.ShortHaulTitle</a></h3>
+	<div class="aircraft-type-gallery">
+	@foreach (var item in Model.Short) {
+		<a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#aircraft-type-box" data-ajax-complete="setupGui()" href="Details/@item.ICAO">
+			<div style="background-image: url('@item.SmallTypeImageUrl')">
+			<p>@item.Longname</p>
+			</div>
+		</a>
+ }
+	</div>
+	<h3><a href="#">@AircraftTypes.CargoTitle</a></h3>
+	<div class="aircraft-type-gallery">
+	@foreach (var item in Model.Cargo) {
+		<a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#aircraft-type-box" data-ajax-complete="setupGui()" href="Details/@item.ICAO">
+			<div style="background-image: url('@item.SmallTypeImageUrl')">
+			<p>@item.Longname</p>
+			</div>
+		</a>
+ }
+	</div>
+</div>
+
+<div id="aircraft-type-box">
+
+@{ Html.RenderAction("Details", new { id = "A380"}); }
+
+</div>
+
+

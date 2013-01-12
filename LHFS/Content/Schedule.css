@@ -1,0 +1,134 @@
+﻿.content 
+{
+	padding-left: 10px;
+	padding-right: 10px;
+	background: #fff;
+}
+
+.header-image 
+{
+	background: url('/Images/Banner/schedule.png') no-repeat;
+	height: 120px;
+}
+
+.filter 
+{
+	padding: 10px;
+	background: #eee;
+	margin-bottom: 30px;
+}
+
+.filter-box 
+{
+	background: #fff;
+	border: 1px solid #909090;
+	width: 220px;
+	margin-bottom: 5px;
+	margin-right: 10px;
+}
+
+.filter-box > .title input 
+{
+	padding: 0;
+	margin: 0;
+}
+
+.filter-box > .title 
+{
+	background: #909090;
+	color: #fff;
+	font-size: 11px;
+	padding: 3px;
+	width: 214px;
+
+}
+
+.filter-box > input.textbox, .filter-box > .date-with-picker, .filter-box > .dropdown
+{
+	width: 210px;
+	margin: 3px
+}
+
+
+
+
+.filter-box.large 
+{
+	width: 464px;
+	float: right;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+
+.filter-box.large  > .title 
+{
+	width: 458px;
+	margin-bottom: 0px;
+}
+
+.filter-box > .scrollable 
+{
+	overflow: auto;
+	height: 120px;
+	padding: 10px;
+}
+
+.scrollable .checkbox-list div
+{
+	width: 40%;
+	display: inline-block;
+	float: left;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+h1 
+{
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+
+/* jquery UI
+-----------------------------------------------------------*/
+
+.sliderText 
+{
+	border:0; 
+	color: #666; 
+	font-size: 10px;
+	text-align: center;
+	width: 220px;
+	margin-top: 5px;
+	margin-bottom: 4px;
+	background-color: transparent;
+}
+
+.ui-slider
+{
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 6px;
+	margin-bottom: 14px;
+}
+
+/* label and input vertical align http://stackoverflow.com/questions/306252/how-to-align-checkboxes-and-their-labels-consistently-cross-browsers */
+
+.scrollable label 
+{
+    display: inline;
+    padding-left: 10px;
+    text-indent: -10px;
+}
+
+.scrollable input 
+{
+    width: 13px;
+    height: 13px;
+    padding: 0;
+    margin:0;
+    vertical-align: bottom;
+    position: relative;
+    top: -1px;
+    *overflow: hidden;
+}

@@ -1,0 +1,123 @@
+<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<LHFS.Views.Users.ViewModel.UsersUserEdit>" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
+    Edit
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+
+<h2>Profil & Einstellungen</h2>
+
+<% using (Html.BeginForm()) { %>
+    <%: Html.ValidationSummary() %>
+
+	<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Profil</a></li>
+		<li><a href="#tabs-2">Einstellungen</a></li>
+		<li><a href="#tabs-3">Vacation</a></li>
+		<li><a href="#tabs-4">Photo ID upload</a></li>
+	</ul>
+	<div id="tabs-1">
+		
+		<table class="StandardForm">
+		<tr><th><%: Html.LabelFor(model => model.Birthday)%></th><td><%: Html.EditorFor(model => model.Birthday, "DateOnly")%> <%: Html.ValidationMessageFor(model => model.Birthday)%></td></tr>
+		<tr><th><%: Html.LabelFor(model => model.City)%></th><td><%: Html.EditorFor(model => model.City)%> <%: Html.ValidationMessageFor(model => model.City)%></td></tr>
+		<tr><th><%: Html.LabelFor(model => model.CountryID)%></th><td><%: Html.DropDownListFor(t => t.CountryID, Model.PossibleCountries)%> <%: Html.ValidationMessageFor(model => model.CountryID)%></td></tr>
+		<tr><th><%: Html.LabelFor(model => model.Mail)%></th><td><%: Html.EditorFor(model => model.Mail)%> <%: Html.ValidationMessageFor(model => model.Mail)%></td></tr>
+
+		<tr><th><%: Html.LabelFor(model => model.VatsimID)%></th><td><%: Html.EditorFor(model => model.VatsimID)%> <%: Html.ValidationMessageFor(model => model.VatsimID)%></td></tr>
+		<tr><th><%: Html.LabelFor(model => model.IvaoID)%></th><td><%: Html.EditorFor(model => model.IvaoID)%> <%: Html.ValidationMessageFor(model => model.IvaoID)%></td></tr>
+		<tr><th><%: Html.LabelFor(model => model.RealPilotLicense)%></th><td><%: Html.TextAreaFor(model => model.RealPilotLicense)%> <%: Html.ValidationMessageFor(model => model.RealPilotLicense)%></td></tr>
+		<tr><th><%: Html.LabelFor(model => model.Comments)%></th><td><%: Html.TextAreaFor(model => model.Comments)%> <%: Html.ValidationMessageFor(model => model.Comments)%></td></tr>
+		
+		<tr><th><%: Html.LabelFor(model => model.ConfirmPassword)%></th><td><%: Html.PasswordFor(model => model.ConfirmPassword)%> <%: Html.ValidationMessageFor(model => model.ConfirmPassword)%></td></tr>
+		<tr><th><%: Html.LabelFor(model => model.Password)%></th><td><%: Html.PasswordFor(model => model.Password)%> <%: Html.ValidationMessageFor(model => model.Password)%></td></tr>
+		</table>
+		
+	</div>
+	<div id="tabs-2">
+	
+		<div class="InfoBox" style="float: right; width: 40%">
+		<p class="Title">Type rating changes</p>
+		
+		<p>Your current rank is <%: Html.DisplayFor(model => model.Rank.Title)%>. In this position you can hold <%: Html.DisplayFor(model => model.Rank.NumberOfTyperatings)%> Type ratings at the same time.</p>
+		<p>Remember: After a type rating change you have to wait for 50 consecutive days to change it into another rating.</p>
+
+		</div>
+
+		<table class="StandardForm">
+		
+		<tr><th><%: Html.LabelFor(model => model.DefaultLanguageID)%></th><td><%: Html.DropDownListFor(model => model.DefaultLanguageID, Model.PossibleLanguages)%> <%: Html.ValidationMessageFor(model => model.DefaultLanguageID)%></td></tr>
+		
+		<tr><th><%: Html.LabelFor(model => model.ReceiveNewsletter)%></th><td><%: Html.CheckBoxFor(model => model.ReceiveNewsletter)%> <%: Html.ValidationMessageFor(model => model.ReceiveNewsletter)%></td></tr>
+
+		<tr><th><%: Html.LabelFor(model => model.HideEmail)%></th><td><%: Html.CheckBoxFor(model => model.HideEmail)%> <%: Html.ValidationMessageFor(model => model.HideEmail)%></td></tr>
+		<tr><th><%: Html.LabelFor(model => model.ShowGallery)%></th><td><%: Html.CheckBoxFor(model => model.ShowGallery)%> <%: Html.ValidationMessageFor(model => model.ShowGallery)%></td></tr>
+		<tr><th><%: Html.LabelFor(model => model.HideProfile)%></th><td><%: Html.CheckBoxFor(model => model.HideProfile)%> <%: Html.ValidationMessageFor(model => model.HideProfile)%></td></tr>
+		
+		<tr><th><%: Html.LabelFor(model => model.CareerPathOption)%></th><td><%: Html.CheckBoxFor(model => model.CareerPathOption)%> <%: Html.ValidationMessageFor(model => model.CareerPathOption)%></td></tr>
+		
+		<tr><th>Type ratings</th><td><%: Html.TypeRatingCheckBoxListFor(model => model.TypeRatingIDs, Model.PossibleTypeRatings, "[active for {0} days]")%> <%: Html.ValidationMessageFor(model => model.TypeRatingIDs)%></td></tr>
+
+		<tr><th><%: Html.LabelFor(model => model.AirportIATA)%></th><td><%: Html.DropDownListFor(t => t.AirportIATA , Model.PossibleHomeBases)%> <%: Html.ValidationMessageFor(model => model.AirportIATA)%></td></tr>
+
+		</table>
+	</div>
+	<div id="tabs-3">
+	
+		<% Html.RenderAction("Vacation"); %>
+
+	</div>
+	<div id="tabs-4">
+
+		<p>You can upload a photo of yourself to be shown in your profile here.</p>
+
+		<div>
+		<input type="file" name="file_upload" id="file_upload" />
+		</div>
+		
+		<img id="memberPhoto" <% if (ViewBag.HasPhoto) { %> src="<%= ViewBag.PhotoLink %>" <% } %> alt="Photo of me"/>
+
+	</div>
+</div>
+
+<div class="ButtonContainer">
+<input type="image" value="save" src="/ButtonImageHandler.ashx?text=Profil und Einstellungen speichern" />
+</div>
+
+<div class="clearfix"></div>
+
+<% } %>
+
+</asp:Content>
+
+<asp:Content ID="Content3" ContentPlaceHolderID="HeaderContent" runat="server">
+<script type="text/javascript">
+	$(function () {
+		$("#tabs").tabs();
+
+		$('#takeVacation').click(function() {
+			$("#tabs-3").load('<%=Url.Action("StartVacation", "Users") %>');
+		});
+	});
+</script>
+<script src="/Scripts/jquery.uploadify.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function () {
+
+		$('#file_upload').uploadify({
+			'swf': '/Content/uploadify.swf',
+			'uploader': '/Users/UploadPhoto',
+			'buttonImage': '/ButtonImageHandler.ashx?text=Bild auswählen&w=120',
+			'width': '148',
+			'height': '23',
+			'onUploadSuccess': function (file, data, response) {
+				$("#memberPhoto").attr("src", "<%= ViewBag.PhotoLink %>");
+			}
+		});
+	});
+</script>
+<link href="/Content/uploadify.css" rel="stylesheet" type="text/css" />
+</asp:Content>
+

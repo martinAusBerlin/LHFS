@@ -1,0 +1,100 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<LHFS.Models.AirportVersion>" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
+</asp:Content>
+
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+
+<h2>Route Manual</h2>
+
+<div class="Actions">
+<%: Html.ImageActionLink("/Images/Icons/edit.png", "TODO", "Edit", "Airports", new { id = Model.ID }, null, null)%>
+</div>
+
+<% if (ViewBag.ShowNoChangesMessage) { %>
+<div class="InfoBox">
+<p class="Title">No changes found</p>
+	<p>You did no changes to the current Airport.</p>
+</div>
+<% } %>
+
+<% if (ViewBag.ShowChangesSaved) { %>
+<div class="InfoBox">
+<p class="Title">Changes saved</p>
+	<p>Your changes were saved.</p>
+</div>
+<% } %>
+
+<h1><%: Html.DisplayFor(model => model.Airport.ICAO) %>/<%: Html.DisplayFor(model => model.Airport.IATA) %> &middot; <%: Html.DisplayFor(model => model.Airport.Name) %>, <%: Html.DisplayFor(model => model.Airport.Country.English) %></h1>
+
+<div class="AirportVersionLeft">
+
+<h3>Abflug</h3>
+
+<p><%: Html.DisplayFor(model => model.Departure.Text)%></p>
+
+<small><%: Html.DisplayFor(model => model.Departure.CreatedByUser.FullnameAndID)%> <%: Html.DisplayFor(model => model.Departure.CreatedOn)%></small>
+
+
+<h3>Ankunft</h3>
+
+<p><%: Html.DisplayFor(model => model.Arrival.Text)%></p>
+
+<small><%: Html.DisplayFor(model => model.Arrival.CreatedByUser.FullnameAndID)%> <%: Html.DisplayFor(model => model.Arrival.CreatedOn)%></small>
+
+
+<h3>Am Boden</h3>
+
+<p><%: Html.DisplayFor(model => model.GroundOp.Text)%></p>
+
+<small><%: Html.DisplayFor(model => model.GroundOp.CreatedByUser.FullnameAndID)%> <%: Html.DisplayFor(model => model.GroundOp.CreatedOn)%></small>
+
+</div>
+
+
+
+<div class="AirportVersionRight">
+
+<h3>Allgemeines</h3>
+
+<table>
+<tr><th>Category</th><td><%: Html.DisplayFor(model => model.Detail.Category) %></td></tr>
+<tr><th>Position</th><td><%: Html.DisplayFor(t => t.Detail.Lat, "Latitude") %> <%: Html.DisplayFor(t => t.Detail.Lat, "Longitude")%>
+<tr><th>Magnetic Variation</th><td><%: Model.Detail.MagVar < 0 ? "E" : "W" %> <%: Math.Abs(Model.Detail.MagVar)%>° </td></tr>
+<tr><th>Elevation</th><td><%: Html.DisplayFor(model => model.Detail.Elevation)%> ft</td></tr>
+</table>
+
+
+<small><%: Html.DisplayFor(model => model.Detail.CreatedByUser.FullnameAndID)%> <%: Html.DisplayFor(model => model.Detail.CreatedOn)%></small>
+
+<h3>Terrain</h3>
+
+<p><%: Html.DisplayFor(model => model.Terrain.Text)%></p>
+
+<small><%: Html.DisplayFor(model => model.Terrain.CreatedByUser.FullnameAndID) %> <%: Html.DisplayFor(model => model.Terrain.CreatedOn)%></small>
+
+<h3>Gefahren</h3>
+
+<p><%: Html.DisplayFor(model => model.Hazard.Text)%></p>
+
+<small><%: Html.DisplayFor(model => model.Hazard.CreatedByUser.FullnameAndID)%> <%: Html.DisplayFor(model => model.Hazard.CreatedOn)%></small>
+
+</div>
+
+<div style="clear: both"></div>
+
+<h3>Departing connections</h3>
+
+<% Html.RenderAction("ConnectionsDepartingFrom", "Connections", new { iata = Model.AirportIATA }); %>
+
+<h3>Arriving connections</h3>
+
+<% Html.RenderAction("ConnectionsArrivingAt", "Connections", new { iata = Model.AirportIATA }); %>
+
+
+<p class="VersionHint">VersionID <%: Html.DisplayFor(model => model.ID)%>, abgerufen <%: DateTime.UtcNow %> UTC</p>
+
+
+</asp:Content>

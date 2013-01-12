@@ -1,0 +1,171 @@
+﻿@using System.Threading
+@using CodeKicker.BBCode
+@using LHFS.Helpers
+@{
+    ViewBag.Title = @Airports.Title;
+}
+
+@model LHFS.Views.Airports.ViewModel.EditModel
+
+@section HeaderContent { 
+	<link href="@Url.Content("~/Content/AirportDetails.css")" rel="stylesheet" type="text/css"/>
+	<script type="text/javascript">
+		$(document).ready(function () {
+
+			$("input[type=image]").click(function () {
+				$("input[type=image]", $(this).parents("form")).removeAttr("clicked");
+				$(this).attr("clicked", "true");
+			});
+			
+			var form = $("form").get(0);
+
+			$(form).submit(function () {
+
+				var val = $("input[type=image][clicked=true]").val();
+
+				if (val == 'Preview') {
+					form.target = '_blank';
+				} else {
+					form.target = '_self';
+				}
+			});
+
+		});
+
+		
+	</script>
+}
+
+
+
+<h1>@Airports.Title</h1>
+
+@if (Thread.CurrentThread.CurrentUICulture.Name == "de-DE") {
+<h2 class="left">@Html.DisplayFor(model => model.CurrentVersion.Airport.ICAO)/@Html.DisplayFor(model => model.CurrentVersion.Airport.IATA) &middot; @Html.DisplayFor(model => model.CurrentVersion.Airport.Name) &middot; @Html.DisplayFor(model => model.CurrentVersion.Airport.IcaoCountryCode.Country.German)</h2>
+} else {
+<h2 class="left">@Html.DisplayFor(model => model.CurrentVersion.Airport.ICAO)/@Html.DisplayFor(model => model.CurrentVersion.Airport.IATA) &middot; @Html.DisplayFor(model => model.CurrentVersion.Airport.Name) &middot; @Html.DisplayFor(model => model.CurrentVersion.Airport.IcaoCountryCode.Country.English)</h2>
+}
+
+<div class="clearfix"></div>
+
+<ul class="menu">
+<li><a href="#Departures">@Airports.DeparturesTitle</a></li>
+<li><a href="#Arrivals">@Airports.ArrivalsTitle</a></li>
+<li><a href="#Terrain">@Airports.TerrainTitle</a></li>
+<li><a href="#Groundops">@Airports.GroundopsTitle</a></li>
+<li><a href="#Hazards">@Airports.HazardsTitle</a></li>
+</ul>
+
+<div class="sidebar left">
+
+<div class="box basics">
+<div class="title">@Airports.EditRules</div>
+<div>
+<table class="bbcode">
+<tr><th>Name</th><th>Syntax</th></tr>
+<tr><td>Bold</td><td>[b]{text}[/b]</td></tr>
+<tr><td>Italic</td><td>[i]{text}[/i]</td></tr>
+<tr><td>Underline</td><td>[u]{text}[/u]</td></tr>
+<tr><td>Line-through</td><td>[s]{text}[/s]</td></tr>
+<tr><td>Font-size</td><td>[size={number}]{text}[/size]</td></tr>
+<tr><td>Font-color</td><td>[color={colour}]{text}[/color]</td></tr>
+<tr><td>Quote</td><td>[quote]{text}[/quote]</td></tr>
+<tr><td>Quote (named)</td><td>[quote={name}]{text}[/quote]</td></tr>
+<tr><td>Link</td><td>[url]{url}[/url]</td></tr>
+<tr><td>Link (named)</td><td>[url={url}]{text}[/url]</td></tr>
+<tr><td>Image</td><td>[img]{url}[/img]</td></tr>
+<tr><td>Image (resized)</td><td>[img={width}x{height}]{url}[/img]</td></tr>
+<tr><td>Unordered List</td><td>[ul]{items}[/ul]</td></tr>
+<tr><td>Ordered List</td><td>[ol]{items}[/ol]</td></tr>
+<tr><td>List item</td><td>[li]{text}[/li]</td></tr>
+<tr><td>Table</td><td>[table]{rows}[/table]</td></tr>
+<tr><td>Table row</td><td>[tr]{cells}[/tr]</td></tr>
+<tr><td>Table header cell</td><td>[th]{content}[/th]</td></tr>
+<tr><td>Table content cell</td><td>[td]{content}[/td]</td></tr>
+<tr><td>Youtube video</td><td>[youtube]{id}[/youtube]</td></tr>
+
+</table>
+
+</div>
+</div>
+
+</div>
+
+@using (Html.BeginForm()) {
+@Html.ValidationSummary(true)
+
+@Html.HiddenFor(model => model.CurrentVersion.ID)
+@Html.HiddenFor(model => model.CurrentVersion.AirportICAO)
+@Html.HiddenFor(model => model.CurrentVersion.Detail.ID)
+
+<div class="maincontent">
+
+
+
+
+<div class="box basics">
+<div class="title"><a name="Basics">@Airports.Basics</a></div>
+<div>
+<table>
+<tr><th>@Airports.Category</th><td>@Html.DropDownListFor(model => model.CurrentVersion.Detail.Category, Model.PossibleCategory, new { @class = "short-width" }) @Html.ValidationMessageFor(model => model.CurrentVersion.Detail.Category)</td></tr>
+<tr><th>@Airports.Position</th><td>@Html.DisplayFor(t => t.CurrentVersion.Detail.Lat, "Latitude") @Html.DisplayFor(t => t.CurrentVersion.Detail.Lat, "Longitude")</td></tr>
+<!--<tr><th>@Airports.MagneticVar</th><td>@Html.TextBoxFor(model => model.CurrentVersion.Detail.MagVar, new { @class = "short-width" }) @Html.ValidationMessageFor(model => model.CurrentVersion.Detail.MagVar)</td></tr>-->
+<tr><th>@Airports.Elevation</th><td>@Html.TextBoxFor(model => model.CurrentVersion.Detail.Elevation, new { @class = "short-width" }) ft @Html.ValidationMessageFor(model => model.CurrentVersion.Detail.Elevation)</td></tr>
+<tr><th>@Airports.LongestRunway</th><td>@Html.TextBoxFor(model => model.CurrentVersion.Detail.LongestRunway, new { @class = "short-width" }) ft @Html.ValidationMessageFor(model => model.CurrentVersion.Detail.LongestRunway)</td></tr>
+</table>
+</div>
+</div>
+
+
+
+<div class="box departures">
+<div class="title"><a name="Departures">@Airports.DeparturesTitle</a></div>
+<div>
+@Html.TextAreaFor(model => model.CurrentVersion.Departure.Text)
+</div>
+</div>
+
+
+<div class="box arrivals">
+<div class="title"><a name="Arrivals">@Airports.ArrivalsTitle</a></div>
+<div>
+@Html.TextAreaFor(model => model.CurrentVersion.Arrival.Text)
+</div>
+</div>
+
+<div class="box terrain">
+<div class="title"><a name="Terrain">@Airports.TerrainTitle</a></div>
+<div>
+@Html.TextAreaFor(model => model.CurrentVersion.Terrain.Text)
+</div>
+</div>
+
+<div class="box groundops">
+<div class="title"><a name="Groundops">@Airports.GroundopsTitle</a></div>
+<div>
+@Html.TextAreaFor(model => model.CurrentVersion.GroundOp.Text)
+</div>
+</div>
+
+<div class="box hazards">
+<div class="title"><a name="Hazards">@Airports.HazardsTitle</a></div>
+<div>
+@Html.TextAreaFor(model => model.CurrentVersion.Hazard.Text)
+</div>
+</div>
+
+</div>
+	
+
+
+<div class="clearfix"></div>
+
+<div class="button-container right">
+@Html.ImageActionLink("/ButtonImageHandler.ashx?text=" + @Airports.CancelButtonText, @Airports.CancelButtonText, "Details", "Airports", new { id = Model.CurrentVersion.AirportICAO }, null, null)
+<input type="image" id="preview" name="action:Preview" value="Preview" src="/ButtonImageHandler.ashx?text=@Airports.PreviewButtonText" />
+<input type="image" id="save" name="action:Save" value="Save" src="/ButtonImageHandler.ashx?text=@Airports.SaveButtonText" />
+</div>
+
+}
+	
+<div class="clearfix"></div>

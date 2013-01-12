@@ -1,0 +1,74 @@
+﻿#schedule 
+{
+	background: #fff url('/Images/Home/schedule.png') no-repeat 10px 35px;
+}
+
+#fleet 
+{
+	background: #fff url('/Images/Home/fleet.png') no-repeat 10px 35px;
+}
+
+#forums 
+{
+	background: #fff url('/Images/Home/forums.png') no-repeat 10px 35px;
+}
+
+#logbook 
+{
+	background: #fff url('/Images/Home/logbook.png') no-repeat 10px 35px;
+}
+
+#roster 
+{
+	background: #fff url('/Images/Home/roster.png') no-repeat 10px 35px;
+}
+
+#routemanual 
+{
+	background: #fff url('/Images/Home/routemanual.png') no-repeat 10px 35px;
+}
+
+#gallery 
+{
+	background: #fff url('/Images/Home/gallery.png') no-repeat 10px 35px;
+}
+
+.section-box {
+	margin: 10px;
+	background: #fff;
+	width: 200px;
+	height: 160px;
+	padding: 10px;
+	float: left;
+	border: 1px solid #ddd
+}
+
+.moveddown 
+{
+	margin-top: 170px;
+}
+
+.content 
+{
+	min-height: 500px;
+}
+
+.myflights-box 
+{
+	margin: 10px;
+	background-color: #4E5D65;
+	height: 320px;
+	padding: 10px;
+	width: 200px;
+	float: left;
+}
+
+.welcome-box 
+{
+	margin: 10px;
+	background: #fff;
+	height: 100px;
+	padding: 10px;
+	width: 200px;
+	border: 1px solid #ddd
+}

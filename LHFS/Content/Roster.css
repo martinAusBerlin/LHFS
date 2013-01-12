@@ -1,0 +1,26 @@
+﻿.content 
+{
+	padding-left: 10px;
+	padding-right: 10px;
+	background: #fff;
+	min-height: 700px;
+}
+
+.user-table
+{
+	width: 100%;
+}
+
+h1 
+{
+	margin-top: 30px;
+	margin-bottom: 40px;
+}
+
+.header-image 
+{
+	background: url('/Images/Banner/roster.png') no-repeat;
+	height: 120px;
+}
+
+

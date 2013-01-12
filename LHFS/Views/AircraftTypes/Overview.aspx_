@@ -1,0 +1,75 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<LHFS.Views.AircraftTypes.ViewModel.AircraftTypesOverview>" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
+    Overview
+</asp:Content>
+
+<asp:Content ID="Content3" ContentPlaceHolderID="HeaderContent" runat="server">
+<script>
+	$(function () {
+		$("#accordion").accordion({
+			autoHeight: false,
+			navigation: true
+		});
+
+		$("#tabs").tabs();
+	});
+</script>
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+
+<h2>Flotte</h2>
+
+<div id="accordion">
+	<h3><a href="#">Long-haul fleet</a></h3>
+	<div class="aircraftTypeGallery">
+	<% foreach (var item in Model.Long) { %>
+		<a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#aircraftTypeBox" href="/AircraftTypes/Details/<%: item.ICAO %>">
+			<div class="aircraftTypeGalleryItem" style="background-image: url('<%: item.SmallTypeImageUrl%>')">
+			<p><%: item.Longname%></p>
+			</div>
+		</a>
+	<% } %>
+	</div>
+	<h3><a href="#">Medium-haul fleet</a></h3>
+	<div>
+	<% foreach (var item in Model.Medium) { %>
+		<a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#aircraftTypeBox" href="/AircraftTypes/Details/<%: item.ICAO %>">
+			<div class="aircraftTypeGalleryItem" style="background-image: url('<%: item.SmallTypeImageUrl%>')">
+			<p><%: item.Longname%></p>
+			</div>
+		</a>
+	<% } %>
+	</div>
+	<h3><a href="#">Short-haul fleet</a></h3>
+	<div>
+	<% foreach (var item in Model.Short) { %>
+		<a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#aircraftTypeBox" href="/AircraftTypes/Details/<%: item.ICAO %>">
+			<div class="aircraftTypeGalleryItem" style="background-image: url('<%: item.SmallTypeImageUrl%>')">
+			<p><%: item.Longname%></p>
+			</div>
+		</a>
+	<% } %>
+	</div>
+	<h3><a href="#">Cargo fleet</a></h3>
+	<div>
+	<% foreach (var item in Model.Cargo) { %>
+		<a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#aircraftTypeBox" href="/AircraftTypes/Details/<%: item.ICAO %>">
+			<div class="aircraftTypeGalleryItem" style="background-image: url('<%: item.SmallTypeImageUrl%>')">
+			<p><%: item.Longname%></p>
+			</div>
+		</a>
+	<% } %>
+	</div>
+</div>
+
+<div id="aircraftTypeBox">
+
+<% Html.RenderAction("Details", new { id = "A380"}); %>
+
+</div>
+
+</asp:Content>
+
+

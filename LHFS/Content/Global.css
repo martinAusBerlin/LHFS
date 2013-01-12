@@ -1,0 +1,203 @@
+﻿body
+{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('/Images/Backgrounds/main.jpg') no-repeat fixed;
+    font-size: 11px;
+}
+
+.global
+{
+	width: 970px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 40px;
+	display: block;
+}
+
+.header 
+{
+	width: 100%;
+	background: #FFB300 url('/Images/Logo/logo.png') no-repeat 10px center;
+	height: 70px;
+}
+
+.nav 
+{
+	background-color: #E8E8E8;
+	color: #909090;
+	width: 904px;
+	display: inline-block;
+}
+
+.nav a
+{
+	text-decoration: none;
+	color: #909090;
+}
+
+.nav a:hover
+{
+	color: #fff;
+}
+
+.nav li:hover a
+{
+	color: #fff;
+}
+
+.nav ul
+{
+	margin: 0;
+	height: 22px;
+	padding: 0;
+	display: block;
+}
+
+.nav li
+{
+	list-style-type: none;
+	font-size: 11px;
+	display: inline-block;
+	padding: 4px 10px 4px 10px;
+}
+
+.nav li:hover
+{
+	background-color: #909090;
+	color: #fff;
+}
+
+.language 
+{
+	background-color: #000066;
+	color: #fff;
+	width: 66px;
+	display: inline-block;
+}
+
+.language a
+{
+	text-decoration: none;
+	color: #fff;
+}
+
+.language a:hover
+{
+	color: #000066;
+}
+
+.language li:hover a
+{
+	color: #000066;
+}
+
+.language ul
+{
+	margin: 0;
+	height: 22px;
+	padding: 0;
+	display: block;
+}
+
+.language li
+{
+	list-style-type: none;
+	font-size: 11px;
+	display: inline-block;
+	padding: 4px 10px 4px 10px;
+}
+
+.language li:hover
+{
+	background-color: #fff;
+	color: #000066;
+}
+
+.content 
+{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	min-height: 740px;
+}
+
+.footer
+{
+	font-size: 9px;
+	background: #fff;
+	color: #000;
+	text-align: right;
+	padding: 6px 5px 6px 5px;
+	margin-top: 5px;
+	margin-bottom: 50px;
+}
+
+.clearfix 
+{
+	clear: both;
+}
+
+h1 { font-family:  Arial, sans-serif; 
+     color: #000066; 
+}
+
+.left
+{
+	float: left;
+}
+
+.right
+{
+	float: right;
+}
+
+#ajax-loader 
+{
+	 display: none;
+	 margin-left: auto;
+	 margin-right: auto;
+	 margin-top: 10px;
+	 margin-bottom: 10px;
+	 width: 66px;
+}
+
+.menu 
+{
+	border: 1px solid #006;
+	padding: 2px 5px;
+}
+
+.menu li
+{
+	list-style-type: none;
+	background: url('/Images/Icons/arrow.png') no-repeat 4px 4px;
+	padding-left: 20px;
+	display: inline;
+}
+
+.menu li a
+{
+	text-decoration: none;
+	color: #006;
+}
+
+.button-container 
+{
+	float: right;
+	margin-top: 10px;
+}
+
+.info-box 
+{
+	padding: 10px 10px 10px 70px;
+	background:  #f1f1f1 url('/Images/Icons/warning.png') no-repeat 10px center;
+	border: 1px solid #FFAB00;
+}
+
+.info-box .title
+{
+	font-weight: bold;
+	font-size: 120%;
+	margin-top: 0;
+}

@@ -1,0 +1,71 @@
+﻿.connection-table td:nth-child(10) {  
+	width: 39px
+}
+
+.connection-table td:nth-child(9) {  
+	width: 130px
+}
+
+.connection-table td:nth-child(6) {  
+	width: 40px
+}
+
+
+.connection-table tr:nth-child(odd)  { background-color:#eee; }
+.connection-table tr:nth-child(even)  { background-color:#fff; }
+
+.connection-table th
+{
+	background-color: #edeeef
+}
+
+.connection-table th, .connection-table td
+{
+	padding: 2px 5px 2px 5px;
+	text-align: left;
+	border-bottom: 1px solid #434d3e;
+	color: #434d3e;
+}
+
+.connection-table small 
+{
+	font-size: 70%;
+}
+
+.connection-table a 
+{
+	text-decoration: none;
+	color: #434d3e;
+	display: inline-block;
+}
+
+.connection-table
+{
+	width: 100%;
+	border-spacing: 1px;
+}
+
+.connection-table em
+{
+	font-weight: normal;
+	font-style: normal;
+	color: #aaa;
+}
+
+.connection-table * .weekdays td
+{
+	padding: 1px;
+	width: 6px;
+	border: 1px solid #aaa;
+	font-size: 70%;
+}
+
+.connection-table * .weekdays
+{
+	border-spacing: 1px;
+}
+
+.ui-icon
+{
+	display: inline-block;
+}

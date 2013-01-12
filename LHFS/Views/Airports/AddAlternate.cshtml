@@ -1,0 +1,33 @@
+﻿@model LHFS.Views.Airports.ViewModel.AddAlternateModel
+@using (Ajax.BeginForm("AddAlternate", "Airports", new AjaxOptions { OnSuccess = "OnAlternateSaved", InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-modal", HttpMethod = "POST" })) {
+	
+<fieldset>
+<legend>@AirportAlternateResource.AddAlternate</legend>
+
+@if(ViewBag.IsSaved != null && ViewBag.IsSaved) {
+@Html.Hidden("IsSaved", "true")
+}
+
+@Html.HiddenFor(model => model.Alternate.AirportICAO)
+
+@Html.ValidationSummary(false)
+
+<table>
+<tr>
+<th>@Html.LabelFor(model => model.Alternate.AlternateAirport)</th><td>@Html.EditorFor(model => model.Alternate.AlternateAirportICAO, "AirportSelectBox")</td>
+</tr>
+<tr>
+<th>@Html.LabelFor(model => model.Alternate.FlightLevel)</th><td>@Html.TextBoxFor(model => model.Alternate.FlightLevel) @Html.ValidationMessageFor(model => model.Alternate.FlightLevel)</td>
+</tr>
+<tr>
+<th>@Html.LabelFor(model => model.Alternate.Description)</th><td>@Html.TextBoxFor(model => model.Alternate.Description) @Html.ValidationMessageFor(model => model.Alternate.Description)</td>
+</tr>
+</table>
+
+<div class="button-container right" style="margin-top: 10px; margin-bottom: 10px">
+<input type="image" value="save" src="/ButtonImageHandler.ashx?text=@AirportAlternateResource.ButtonText" />
+</div>
+	
+</fieldset>
+
+}

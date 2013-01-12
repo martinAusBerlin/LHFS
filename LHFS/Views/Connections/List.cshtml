@@ -1,0 +1,96 @@
+﻿@using LHFS.Views.Connections.ViewModel
+@using LHFS.Helpers
+@using LHFS.Resources
+@model SearchModel
+
+
+<script type="text/javascript">
+	
+	$(document).ready(function () {
+
+		$('.ui-icon').hover(
+			function () {
+				$(this).parent().addClass('ui-state-hover');
+			},
+			function () {
+				$(this).parent().removeClass('ui-state-hover');
+			}
+		);
+	});
+
+</script>
+
+<table class="connection-table">
+    <tr>
+        <th>
+            @Schedule.Flight
+        </th>
+		<th>
+			@Schedule.Weekdays
+		</th>
+        <th>
+            @Schedule.DepartureAirport
+        </th>
+        <th>
+            @Schedule.DestinationAirport
+        </th>
+        <th>
+            @Schedule.DepartureTableHeader<br /><small>UTC/LOC</small>
+        </th>
+        <th>
+            @Schedule.DestinationTableHeader<br /><small>UTC/LOC</small>
+        </th>
+		<th>
+            @Schedule.AircraftTypeTableHeader
+        </th>
+		<th>
+            @Schedule.DurationTableHeader
+        </th>
+       	<th>
+            @Schedule.Airline
+        </th>
+		<th>
+		</th>
+    </tr>
+
+@foreach (var item in Model.Connections) {
+    <tr>
+        <td>
+			@Html.Raw(item.Name.Replace(" ", "&nbsp;"))
+        </td>
+		<td>
+			@item.GetWeekdayDisplay()
+        </td>
+		 <td>
+			@item.Departure.Name, @(item.Departure.IcaoCountryCode.Country != null ? item.Departure.IcaoCountryCode.Country.English : Schedule.Unknown)<br />
+			<em>@item.Departure.ICAO &middot; @item.Departure.IATA</em>
+        </td>
+        <td>
+			@item.Destination.Name, @(item.Destination.IcaoCountryCode.Country != null ? item.Destination.IcaoCountryCode.Country.English : Schedule.Unknown)<br />
+			<em>@item.Destination.ICAO &middot; @item.Destination.IATA</em>
+        </td>
+        <td>
+			@string.Format("{0:00}:{1:00}", item.DepTimeUtc(Model.Date).Hours, item.DepTimeUtc(Model.Date).Minutes)<br />
+			<em>@string.Format("{0:00}:{1:00}", item.DepTimeLocal.Hours, item.DepTimeLocal.Minutes)</em>
+        </td>
+        <td>
+			@string.Format("{0:00}:{1:00}", item.ArrTimeUtc(Model.Date).Hours, item.ArrTimeUtc(Model.Date).Minutes) <small>@(item.PlusOneDay(Model.Date) ? "+1" : String.Empty)</small><br />
+			<em>@string.Format("{0:00}:{1:00}", item.ArrTimeLocal.Hours, item.ArrTimeLocal.Minutes)</em>
+        </td>
+		  <td title="@item.AircraftType.Longname">
+			@item.AircraftType.ICAO 
+        </td>
+        <td>
+			@string.Format("{0:00}:{1:00}", item.FlightTime(Model.Date).Hours, item.FlightTime(Model.Date).Minutes)
+        </td>
+		<td title="@item.Airline.Name">
+			<img src="/Images/Airlines/@(item.Airline.ICAO).png" />
+        </td>
+		<td>
+			@Ajax.IconActionLink("ui-icon-disk", @Schedule.Save, "Book", "Flights", new { id = item.ID }, new AjaxOptions() { UpdateTargetId = "dialog-modal", OnSuccess = "OnSuccessFlightForBooking" })
+			@if (Model.ShowReverseButton) { @Ajax.IconActionLink("ui-icon-arrowreturnthick-1-w", @Schedule.ReturnFlight, "Reverse", "Connections", new { id = item.ID }, new AjaxOptions() { LoadingElementId = "ajax-loader", UpdateTargetId = "connection-table", OnBegin = "OnBegin", OnSuccess = "OnSuccess" }) } 
+		</td>
+    </tr>  
+}
+</table>
+

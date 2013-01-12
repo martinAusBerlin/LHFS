@@ -1,0 +1,90 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<LHFS.Views.Airports.ViewModel.AirportsEdit>" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
+</asp:Content>
+
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+
+<h2>Route Manual</h2>
+
+<% using (Html.BeginForm()) { %>
+<%: Html.ValidationSummary(true) %>
+
+
+<%: Html.HiddenFor(model => model.CurrentVersion.ID) %>
+<%: Html.HiddenFor(model => model.CurrentVersion.AirportIATA)%>
+<%: Html.HiddenFor(model => model.CurrentVersion.Detail.ID)%>
+
+<h1><%: Html.DisplayFor(model => model.CurrentVersion.Airport.ICAO) %>/<%: Html.DisplayFor(model => model.CurrentVersion.Airport.IATA) %> &middot; <%: Html.DisplayFor(model => model.CurrentVersion.Airport.Name)%>, <%: Html.DisplayFor(model => model.CurrentVersion.Airport.Country.English) %></h1>
+
+
+<div class="AirportVersionLeft">
+
+<h3>Abflug</h3>
+
+<p><%: Html.TextAreaFor(model => model.CurrentVersion.Departure.Text)%></p>
+
+<small><%: Html.DisplayFor(model => model.CurrentVersion.Departure.CreatedByUser.FullnameAndID)%> <%: Html.DisplayFor(model => model.CurrentVersion.GroundOp.CreatedOn)%></small>
+
+
+<h3>Ankunft</h3>
+
+<p><%: Html.TextAreaFor(model => model.CurrentVersion.Arrival.Text)%></p>
+
+<small><%: Html.DisplayFor(model => model.CurrentVersion.Arrival.CreatedByUser.FullnameAndID)%> <%: Html.DisplayFor(model => model.CurrentVersion.GroundOp.CreatedOn)%></small>
+
+
+<h3>Am Boden</h3>
+
+<p><%: Html.TextAreaFor(model => model.CurrentVersion.GroundOp.Text)%></p>
+
+<small><%: Html.DisplayFor(model => model.CurrentVersion.GroundOp.CreatedByUser.FullnameAndID)%> <%: Html.DisplayFor(model => model.CurrentVersion.GroundOp.CreatedOn)%></small>
+
+</div>
+
+
+
+<div class="AirportVersionRight">
+
+<h3>Allgemeines</h3>
+
+<table>
+<tr><th>Category</th><td><%: Html.DropDownListFor(model => model.CurrentVersion.Detail.Category, Model.PossibleCategory, new { @class = "short-width" })%> <%: Html.ValidationMessageFor(model => model.CurrentVersion.Detail.Category)%></td></tr>
+<tr><th>Position</th><td><%: Html.DisplayFor(t => t.CurrentVersion.Detail.Lat, "Latitude")%> <%: Html.DisplayFor(t => t.CurrentVersion.Detail.Lat, "Longitude")%>
+<tr><th>Magnetic Variation</th><td><%: Html.TextBoxFor(model => model.CurrentVersion.Detail.MagVar, new { @class = "short-width" })%> <%: Html.ValidationMessageFor(model => model.CurrentVersion.Detail.MagVar)%></td></tr>
+<tr><th>Elevation</th><td><%: Html.TextBoxFor(model => model.CurrentVersion.Detail.Elevation, new { @class = "short-width" })%> ft <%: Html.ValidationMessageFor(model => model.CurrentVersion.Detail.Elevation)%></td></tr>
+</table>
+
+
+<small><%: Html.DisplayFor(model => model.CurrentVersion.Detail.CreatedByUser.FullnameAndID)%> <%: Html.DisplayFor(model => model.CurrentVersion.Detail.CreatedOn)%></small>
+
+<h3>Terrain</h3>
+
+<p><%: Html.TextAreaFor(model => model.CurrentVersion.Terrain.Text)%></p>
+
+
+<small><%: Html.DisplayFor(model => model.CurrentVersion.Terrain.CreatedByUser.FullnameAndID) %> <%: Html.DisplayFor(model => model.CurrentVersion.GroundOp.CreatedOn)%></small>
+
+<h3>Gefahren</h3>
+
+<p><%: Html.TextAreaFor(model => model.CurrentVersion.Hazard.Text)%></p>
+
+
+<small><%: Html.DisplayFor(model => model.CurrentVersion.Hazard.CreatedByUser.FullnameAndID)%> <%: Html.DisplayFor(model => model.CurrentVersion.GroundOp.CreatedOn)%></small>
+
+</div>
+
+<div style="clear: both"></div>
+
+<div class="ButtonContainer">
+<input type="submit" value="Änderung speichern" />
+</div>
+
+<% } %>
+
+<p class="VersionHint">Version <%: Html.DisplayFor(model => model.CurrentVersion.Airport.IATA)%>-<%: Html.DisplayFor(model => model.CurrentVersion.ID)%>, abgerufen <%: DateTime.UtcNow %> UTC</p>
+
+
+</asp:Content>

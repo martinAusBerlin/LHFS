@@ -1,0 +1,38 @@
+﻿
+.airport-table tr:nth-child(odd)  { background-color:#eee; }
+.airport-table tr:nth-child(even)  { background-color:#fff; }
+
+
+
+.airport-table th, .airport-table td
+{
+	padding: 2px 5px 2px 5px;
+	text-align: left;
+	border-bottom: 1px solid #434d3e;
+	color: #434d3e;
+}
+
+.airport-table th
+{
+	background-color: #4d4d4d;
+	color: #fff;
+}
+
+.airport-table a 
+{
+	text-decoration: none;
+	color: #434d3e;
+}
+
+.airport-table {
+	width: 100%;
+	border-spacing: 1px;
+}
+
+.airport-table em
+{
+	font-weight: normal;
+	font-style: normal;
+	color: #aaa;
+}
+

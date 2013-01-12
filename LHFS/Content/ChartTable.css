@@ -1,0 +1,89 @@
+﻿.chart-table dt
+{
+	padding: 3px;
+	display: inline-block;
+	width: 40px;
+	vertical-align: top;
+	margin-bottom: 2px;
+}
+
+.chart-table dd
+{
+	padding: 3px;
+	display: inline-block;
+	margin-left: 0;
+	width: 42%;
+}
+
+.chart-table dd  > a:nth-child(2)
+{
+	float: right;
+}
+
+.chart-table dt.aoi
+{
+	background-color:#ccc;
+}
+
+.chart-table dt.afc
+{
+	background-color: #B37ECC;
+}
+
+.chart-table dt.agc
+{
+	background-color: #FFB3B5;
+}
+
+.chart-table dt.apc
+{
+	background-color:#FFB3B5;
+}
+
+.chart-table dt.lvc
+{
+	background-color:#FFB3B5;
+}
+
+.chart-table dt.eosid
+{
+	background: url('/Images/ChartTypes/eosid.jpg') top left no-repeat;
+}
+
+.chart-table dt.sid
+{
+	background-color: #5dfe4c;
+}
+
+.chart-table dt.sidpt
+{
+	background-color:#ccc;
+}
+
+.chart-table dt.star
+{
+	background-color:#e0b064;
+}
+
+.chart-table dt.iac
+{
+	background-color:#8abce2;
+}
+
+.chart-table dt.vac
+{
+	background-color:#8abce2;
+}
+
+.chart-table dt.mrc
+{
+	background-color:#c3ddf0;
+}
+.chart-table dt.fam
+{
+	background-color:#ccdf6c;
+}
+.chart-table dt.tempo
+{
+	background: url('/Images/ChartTypes/tempo.jpg') top left no-repeat;
+}

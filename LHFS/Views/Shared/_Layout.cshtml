@@ -1,0 +1,100 @@
+﻿@using System.Threading
+@using LHFS.Helpers
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>@ViewBag.Title</title>
+	
+	<script src="@Url.Content("~/Scripts/jquery-1.8.3.js")" type="text/javascript"></script>
+	<script src="@Url.Content("~/Scripts/jquery.validate.js")" type="text/javascript"></script>
+	<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")" type="text/javascript"></script>
+	<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>
+	<script src="@Url.Content("~/Scripts/jquery-ui-1.9.2.custom.min.js")" type="text/javascript"></script>
+	<!--<script src="@Url.Content("~/Scripts/jquery.qtip.min.js")" type="text/javascript"></script>-->
+	
+	<link  type="text/css" href="@Url.Content("~/Content/Fonts.css")" rel="stylesheet" type="text/css"/>
+	<link  type="text/css" href="@Url.Content("~/Content/Global.css")" rel="stylesheet" type="text/css"/>
+	<link href="@Url.Content("~/Content/themes/custom-theme/jquery-ui-1.9.2.custom.min.css")" rel="stylesheet" type="text/css" />
+	<!--<link href="@Url.Content("~/Content/jquery.qtip.min.css")" rel="stylesheet" type="text/css" />-->
+
+	@if (Thread.CurrentThread.CurrentUICulture.Name == "de-DE") {
+	<script src="@Url.Content("~/Scripts/jquery-ui/jquery.ui.datepicker-de.js")" type="text/javascript"></script>
+	}
+
+	<script src="@Url.Content("~/Scripts/jquery.globalize/globalize.js")" type="text/javascript"></script>
+	<script src="@Url.Content("~/Scripts/jquery.globalize/cultures/globalize.culture." + @Thread.CurrentThread.CurrentUICulture.Name + ".js")" type="text/javascript"></script>
+		
+	<script src="@Url.Content("~/Scripts/validation.js")" type="text/javascript"></script>
+	
+	<script type="text/javascript">
+		$.validator.methods.number = function (value, element) {
+			return this.optional(element) || !isNaN(Globalize.parseFloat(value));
+		}
+
+		$(document).ready(function () {
+			Globalize.culture('@Thread.CurrentThread.CurrentUICulture.Name');
+
+			$(".date-with-picker").datepicker({
+				dateFormat: 'yy-mm-dd',
+			});
+			
+			//$(document).tooltip();
+		
+		});
+
+		// for xhr request caching
+		var cache = {}, lastXhr;
+
+		function OnSuccessFlightForBooking() {
+			$("#dialog-modal").dialog({
+				modal: true,
+				resizable: false,
+				minWidth: 320
+			}).dialog('open');
+		}
+	</script>
+
+	<!--
+	<script type="text/javascript">
+
+		$(function () {
+			$('*[title]').qtip({
+				position: {
+					target: 'mouse'
+				}
+			});
+		});
+	
+	</script>
+	-->
+	@RenderSection("HeaderContent", required: false)
+</head>
+<body>
+	<div class="global">
+		<div class="header">
+		</div>
+		<div class="nav"><ul>
+		<li>@Html.ActionLink("Dashboard", "Index", "Home")</li>
+		<li>@Html.ActionLink("Profil & Einstellungen", "UserEdit", "Users")</li>
+		<li>@Html.ActionLink("Route Manual", "Search", "Airports")</li>
+		<li>@Html.ActionLink("Pilot Roster", "Roster", "Users")</li>
+		<li>@Html.ActionLink("Flugplan", "Search", "Connections")</li>
+		<li>@Html.ActionLink("Flotte", "Overview", "AircraftTypes")</li>
+		<li>@Html.ActionLink("Galerie", "Overview", "Gallery")</li>
+		<li>Forum</li>
+		<li>Administration</li>
+		</ul>
+		</div><div class="language"><ul><li>@Html.LanguageSelectorLink("de-DE", "DE", null)</li><li>@Html.LanguageSelectorLink("en-US", "EN", null)</li></div>
+	
+		<div class="header-image"></div>
+		<div id="dialog-modal">
+		</div>
+		<div class="content">
+		@RenderBody()
+		</div>
+		<div class="footer">Privacy Policy | Legal notice | Contact us</div>
+		<!--Copyright 2002-<%: DateTime.UtcNow.Year %> © LH FlightSim Pilots Group. All rights reserved.-->
+		
+	</div>
+</body>
+</html>

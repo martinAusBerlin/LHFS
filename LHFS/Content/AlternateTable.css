@@ -1,0 +1,15 @@
+﻿.alternate-table 
+{
+	margin: 0;
+	padding-left: 20px;
+}
+
+.alternate-table dd  
+{
+	margin-left: 0px;
+}
+
+.alternate-table dt a
+{
+	float: right;
+}

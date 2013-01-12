@@ -1,0 +1,15 @@
+﻿@using LHFS.Resources
+@model IEnumerable<LHFS.Views.Users.ViewModel.UserTableModel>
+
+@{
+	ViewBag.Title = Roster.Title;
+}
+
+@section HeaderContent { 
+	<link href="@Url.Content("~/Content/Roster.css")" rel="stylesheet" type="text/css"/>
+	<link href="@Url.Content("~/Content/UserTable.css")" rel="stylesheet" type="text/css"/>
+}
+
+<h1>@Roster.Title</h1>
+
+@Html.Partial("UserTable", Model)

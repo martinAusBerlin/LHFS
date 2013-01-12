@@ -1,0 +1,72 @@
+@model LHFS.Models.AircraftType
+
+@section HeaderContent { 
+<script type="text/javascript">
+	$(function () {
+		$("#accordion").accordion({
+			autoHeight: false,
+			navigation: true
+		});
+
+		$("#tabs").tabs();
+	});
+</script>
+}
+
+<div class="aircraft-type-box">
+
+	<div class="image-box">
+	<h1>@Model.Longname</h1>
+	<img src="@Model.TypeImageUrl" alt="@Model.Longname"/>
+	</div>
+
+	<div class="description">
+
+	<table>
+	<tr><th class="divisor" colspan="2">Group facts</th></tr>
+	<tr><th>Active typerated members</th><td>39 (48 %)</td></tr>
+	<tr><th>Hours flown</th><td>8386</td></tr>
+	<tr><th>Recommended Addon</th><td>@Html.Raw(Model.Addon != null ? Model.Addon : "&mdash;")</td></tr>
+
+	<tr><th class="divisor" colspan="2">General data</th></tr>
+	<tr><th>Manufacturer</th><td>@Model.Manufacturer</td></tr>
+	<tr><th>Model</th><td>@Model.Model</td></tr>
+	<tr><th>Division</th><td>@Model.Division.Name</td></tr>
+	<tr><th>Quantity</th><td>@Model.Quantity</td></tr>
+	<tr><th>Seating capacity</th><td>@Model.SeatingCapacity</td></tr>
+	<tr><th>Range</th><td>@Model.RangeInNm nm</td></tr>
+
+	<tr><th class="divisor" colspan="2">Technical data</th></tr>
+	<tr><th>Length</th><td>@Model.Length</td></tr>
+	<tr><th>Wingspan</th><td>@Model.Wingspan</td></tr>
+	<tr><th>Height</th><td>@Model.Height</td></tr>
+	<tr><th>Engines</th><td>@Model.Engines</td></tr>
+	<tr><th>Thrust</th><td>@Model.Thrust</td></tr>
+	<tr><th>Econ cruise speed</th><td>@Model.EconCruiseSpeed</td></tr>
+	<tr><th>Max. cruise altitude</th><td>@Model.MaxCruiseAlt</td></tr>
+	<tr><th>DOW</th><td>@Model.Dow kg</td></tr>
+	<tr><th>MTOW</th><td>@Model.Mtow kg</td></tr>
+	<tr><th>MLDW</th><td>@Model.Mldw kg</td></tr>
+	</table>
+
+	</div>
+
+</div>
+
+<div class="clearfix"></div>
+
+<div id="tabs" style="margin-top: 50px">
+<ul>
+	<li><a href="#tabs-1">@AircraftTypes.LongestFlights</a></li>
+	<li><a href="#tabs-2">@AircraftTypes.ShortestFlights</a></li>
+	<li><a href="#tabs-3">@AircraftTypes.MostBookedFlights</a></li>
+</ul>
+<div id="tabs-1">
+@{ Html.RenderAction("LongestFlights", "Connections", new { AircraftTypeID = Model.ICAO });}
+</div>
+
+<div  id="tabs-2">
+@{Html.RenderAction("ShortestFlights", "Connections", new { AircraftTypeID = Model.ICAO });}
+</div>
+
+</div>

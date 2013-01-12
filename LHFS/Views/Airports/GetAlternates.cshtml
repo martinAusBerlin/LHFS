@@ -1,0 +1,20 @@
+﻿@model IEnumerable<LHFS.Models.AirportAlternate>
+@using LHFS.Helpers
+
+<ol class="alternate-table">
+@foreach (var item in Model) {
+<li>
+<dl>
+	<dt>@item.AlternateAirport.ICAO
+	@if(!String.IsNullOrEmpty(item.AlternateAirport.IATA)) { <text>/</text>@item.AlternateAirport.IATA } 
+	@if(item.FlightLevel.HasValue) { 
+	 <text>(FL </text>@item.FlightLevel<text>)</text>
+	}
+	@Ajax.IconActionLink("ui-icon-trash", @AirportChartResource.Delete, "DeleteAlternate", "Airports", new { id = item.ID }, new AjaxOptions() { OnSuccess = "LoadAlternates", HttpMethod = "DELETE", Confirm = @AirportAlternateResource.DeleteConfirmationAlternate })</dt>
+	@if(!String.IsNullOrEmpty(item.Description)) {
+		<dd>@item.Description</dd>
+	}
+</dl>
+</li>
+}
+</ol>

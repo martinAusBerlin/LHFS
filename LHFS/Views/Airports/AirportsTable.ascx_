@@ -1,0 +1,19 @@
+<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<IEnumerable<LHFS.Models.Airport>>" %>
+
+<table class="AirportsOverviewTable">
+<tr><th>ICAO</th><th>IATA</th><th>Name</th><th>Country</th></tr>
+<% foreach (var item in Model) { %>
+<tr>
+	<% if (item.ICAO != null) { %>
+		<td><%= Html.ActionLink(item.ICAO, "Details", new { id = item.IATA })%></td>
+		<td><%= Html.ActionLink(item.IATA, "Details", new { id = item.IATA })%></td>
+		<td><%= Html.ActionLink(item.Name, "Details", new { id = item.IATA })%></td>
+		<td><%= Html.ActionLink(item.Country.English, "Details", new { id = item.IATA })%></td>
+	<% } else {%>
+		<td></td>
+		<td><%= Html.ActionLink(item.IATA, "Details", new { id = item.IATA })%></td>
+		<td></td>
+	<% } %>
+</tr>
+<% } %>		
+</table>

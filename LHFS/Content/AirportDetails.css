@@ -1,0 +1,179 @@
+﻿.content 
+{
+	padding-left: 10px;
+	padding-right: 10px;
+	background: #fff;
+}
+
+.header-image 
+{
+	background: url('/Images/Banner/airports.png') no-repeat;
+	height: 120px;
+}
+
+.box
+{
+	background-color: #fff;
+	border: 1px solid #4d4d4d;
+	margin: 0 0px 20px 0px;
+	display: inline-block;
+}
+
+.box > div
+{
+	margin: 0px;
+	padding: 5px;
+}
+
+
+.box > small
+{
+	padding: 5px;
+	display: block;
+}
+
+
+.box > .title
+{
+	font-size: 140%;
+	padding: 5px;
+	padding-left: 35px;
+	line-height: 20px;
+	color: #fff;
+	background-color: #4d4d4d;
+}
+
+
+.box > .title a:nth-child(2)
+{
+	color: #fff;
+	text-decoration: none;
+	float: right;
+	font-size: 12px;
+	background: url('/Images/Icons/arrow-white.png') no-repeat left center;
+	padding-left: 15px;
+}
+
+.sidebar 
+{
+	width: 165px;
+}
+
+.sidebar > .box 
+{
+	width: 158px;
+}
+
+.connections > .box 
+{
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+.connections > .box > table
+{
+	margin: 5px;
+	width: 99%;
+}
+
+.maincontent 
+{
+	width: 780px;
+	margin-left: 170px;
+}
+
+.maincontent > .box 
+{
+	width: 100%;
+
+}
+
+
+.departures > .title
+{
+	background: #4d4d4d url('/Images/Icons/departures.png') no-repeat 5px 5px;
+}
+
+.arrivals > .title
+{
+	background: #4d4d4d url('/Images/Icons/arrivals.png') no-repeat 5px 5px;
+}
+
+.groundops > .title
+{
+	background: #4d4d4d url('/Images/Icons/groundops.png') no-repeat 5px 5px;
+}
+
+.terrain > .title
+{
+	background: #4d4d4d url('/Images/Icons/terrain.png') no-repeat 5px 5px;
+}
+
+.charts > .title
+{
+	background: #4d4d4d url('/Images/Icons/charts.png') no-repeat 5px 5px;
+}
+
+.hazards > .title
+{
+	background: #4d4d4d url('/Images/Icons/hazards.png') no-repeat 5px 5px;
+}
+
+.basics > .title
+{
+	background: #4d4d4d url('/Images/Icons/basics.png') no-repeat 5px 5px;
+}
+
+.menu 
+{
+	margin-bottom: 20px;
+}
+
+.box textarea 
+{
+	width: 99%;
+	height: 300px;
+}
+
+.bbcode tr:nth-child(odd)  { background-color:#ccc; }
+.bbcode tr:nth-child(even)  { background-color:#fff; }
+
+.box table  th
+{
+	text-align: left;
+}
+	
+
+.short-width 
+{
+	width: 50px;
+}
+
+.basics-table tr th
+{
+	width: 45px;
+}
+
+fieldset table 
+{
+	width: 100%;
+	border-spacing: 1px;
+}
+
+fieldset table th
+{
+	background: #FFB300;
+	color: #fff;
+	text-align: right;
+	font-weight: normal;
+}
+
+fieldset table th, fieldset table td
+{
+	padding: 2px;
+}
+
+fieldset table td > input, fieldset table td > select
+{
+	width: 100%;
+}

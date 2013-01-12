@@ -1,0 +1,9 @@
+﻿@model IEnumerable<LHFS.Models.AirportChart>
+@using LHFS.Helpers
+
+<dl class="chart-table">
+@foreach (var item in Model) {
+<dt class="@item.ChartTypeKey.ToLower()" title="@item.ChartType.Description">@item.ChartTypeKey</dt>
+<dd><a href="@item.Link" target="_blank" title="@item.Title">@item.Title</a> @Ajax.IconActionLink("ui-icon-trash", @AirportChartResource.Delete, "DeleteChart", "Airports", new { id = item.ID }, new AjaxOptions() { OnSuccess = "LoadCharts", HttpMethod = "DELETE", Confirm = @AirportChartResource.DeleteConfirmationChart })</dd>
+}
+</dl>
